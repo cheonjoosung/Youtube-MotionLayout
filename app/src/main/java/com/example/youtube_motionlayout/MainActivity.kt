@@ -81,11 +81,10 @@ class MainActivity : AppCompatActivity(), VideoIdListener {
     }
 
     override fun pass(videoId: String) {
-        Toast.makeText(applicationContext, "id id $videoId", Toast.LENGTH_SHORT).show()
 
-        if (videoId.isEmpty()) return
+        val id = if (videoId.isEmpty()) "JKIunx-L4w4" else videoId
 
-        val youtubePlayerFragment = YoutubeViewFragment(videoId)
+        val youtubePlayerFragment = YoutubeViewFragment(id)
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, youtubePlayerFragment, tag)
             .commit()

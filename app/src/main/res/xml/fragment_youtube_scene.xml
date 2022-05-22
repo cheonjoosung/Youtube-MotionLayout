@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        app:motionInterpolator="easeInOut"
+        motion:constraintSetEnd="@+id/end"
+        motion:constraintSetStart="@id/start"
+        motion:duration="300">
+
+        <OnSwipe
+            app:dragDirection="dragUp"
+            app:maxAcceleration="200"
+            app:touchAnchorId="@+id/player_view_frameLayout"
+            app:touchAnchorSide="top"
+            app:touchRegionId="@id/player_view_frameLayout" />
+
+        <KeyFrameSet>
+
+            <!-- 모션없이 start/end 포지션에 따라 화면표시 여부 -->
+            <KeyAttribute
+                app:framePosition="100"
+                app:motionTarget="@id/scroll_view">
+                <CustomAttribute
+                    app:attributeName="alpha"
+                    app:customFloatValue="1.0" />
+            </KeyAttribute>
+
+            <KeyAttribute
+                app:framePosition="0"
+                app:motionTarget="@id/scroll_view">
+                <CustomAttribute
+                    app:attributeName="alpha"
+                    app:customFloatValue="0.5" />
+            </KeyAttribute>
+
+        </KeyFrameSet>
+
+        <KeyFrameSet>
+
+            <KeyAttribute
+                app:framePosition="0"
+                app:motionTarget="@id/iv_close">
+                <CustomAttribute
+                    app:attributeName="alpha"
+                    app:customFloatValue="1.0" />
+            </KeyAttribute>
+
+            <KeyAttribute
+                app:framePosition="1"
+                app:motionTarget="@id/iv_close">
+                <CustomAttribute
+                    app:attributeName="alpha"
+                    app:customFloatValue="0.0" />
+            </KeyAttribute>
+
+        </KeyFrameSet>
+
+        <KeyFrameSet>
+
+            <KeyAttribute
+                app:framePosition="0"
+                app:motionTarget="@id/iv_pause">
+                <CustomAttribute
+                    app:attributeName="alpha"
+                    app:customFloatValue="1.0" />
+            </KeyAttribute>
+
+            <KeyAttribute
+                app:framePosition="1"
+                app:motionTarget="@id/iv_pause">
+                <CustomAttribute
+                    app:attributeName="alpha"
+                    app:customFloatValue="0.0" />
+            </KeyAttribute>
+
+        </KeyFrameSet>
+
+    </Transition>
+
+
+    <!-- mini 화면    -->
+    <ConstraintSet android:id="@+id/start">
+
+        <Constraint
+            android:id="@id/player_background_view"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:layout_marginBottom="60dp"
+            android:padding="16dp"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent" />
+
+        <Constraint
+            android:id="@id/player_view_frameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:layout_marginBottom="60dp"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent" />
+
+        <Constraint
+            android:id="@id/playerView"
+            android:layout_width="150dp"
+            android:layout_height="90dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/player_background_view" />
+
+        <Constraint
+            android:id="@+id/tv_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            motion:layout_constraintEnd_toStartOf="@id/iv_close"
+            motion:layout_constraintStart_toEndOf="@id/playerView"
+            motion:layout_constraintTop_toTopOf="@id/player_view_frameLayout"
+            motion:layout_constraintVertical_chainStyle="packed" />
+
+        <Constraint
+            android:id="@id/scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="-1dp"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toBottomOf="@+id/playerView" />
+
+        <Constraint
+            android:id="@id/iv_close"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="center"
+            android:padding="4dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@id/player_view_frameLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/player_view_frameLayout" />
+
+        <Constraint
+            android:id="@id/iv_pause"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:gravity="center"
+            android:padding="4dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/iv_close"
+            app:layout_constraintEnd_toStartOf="@id/iv_close"
+            app:layout_constraintTop_toTopOf="@id/iv_close" />
+    </ConstraintSet>
+
+
+    <!-- full 화면    -->
+    <ConstraintSet android:id="@+id/end">
+        <Constraint
+            android:id="@id/player_background_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Constraint
+            android:id="@id/playerView"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/player_background_view" />
+
+        <Constraint
+            android:id="@id/tv_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintTop_toBottomOf="@id/playerView" />
+
+        <Constraint
+            android:id="@id/scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+        <Constraint
+            android:id="@id/iv_close"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/player_background_view" />
+
+        <Constraint
+            android:id="@id/iv_pause"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@id/iv_close"
+            app:layout_constraintTop_toTopOf="@id/player_view_frameLayout" />
+    </ConstraintSet>
+
+</MotionScene>

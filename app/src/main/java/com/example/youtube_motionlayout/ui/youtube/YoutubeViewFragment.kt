@@ -5,7 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.youtube_motionlayout.R
 import com.example.youtube_motionlayout.databinding.FragmentYoutubeViewBinding
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 
 class YoutubeViewFragment(
     val videoId: String
@@ -25,17 +28,40 @@ class YoutubeViewFragment(
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.apply {
+
+            viewContainer.transitionToEnd()
+
+            playerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+                override fun onReady(youTubePlayer: YouTubePlayer) {
+                    youTubePlayer.loadVideo(videoId, 0F)
+                    youTubePlayer.play()
+                }
+            })
+
+            ivClose.setOnClickListener {
+                requireActivity().supportFragmentManager
+                    .beginTransaction()
+                    //.setCustomAnimations(0, R.anim.slide_in_down)
+                    .remove(this@YoutubeViewFragment)
+                    .commit()
+            }
+        }
+    }
 
 
     fun closeFragment() {
-        /*if (binding.motionLayout.currentState == R.id.start) {
+        if (binding.viewContainer.currentState == R.id.start) {
             requireActivity().supportFragmentManager
                 .beginTransaction()
-                .setCustomAnimations(0, R.anim.slide_in_down)
+                //.setCustomAnimations(0, R.anim.slide_in_down)
                 .remove(this@YoutubeViewFragment)
                 .commit()
         } else {
-            binding.motionLayout.transitionToStart()
-        }*/
+            binding.viewContainer.transitionToStart()
+        }
     }
 }
