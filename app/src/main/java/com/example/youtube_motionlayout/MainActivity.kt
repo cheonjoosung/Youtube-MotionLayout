@@ -2,8 +2,10 @@ package com.example.youtube_motionlayout
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -39,6 +41,43 @@ class MainActivity : AppCompatActivity(), VideoIdListener {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+
+        binding.mainContainer.addTransitionListener(object : MotionLayout.TransitionListener{
+            override fun onTransitionStarted(
+                motionLayout: MotionLayout?,
+                startId: Int,
+                endId: Int
+            ) {
+            }
+
+            override fun onTransitionChange(
+                motionLayout: MotionLayout?,
+                startId: Int,
+                endId: Int,
+                progress: Float
+            ) {
+                Log.e(MainActivity::class.java.simpleName, "change $startId $progress $startId $endId")
+
+                if (progress > 0.5f) {
+                    hideActionBar()
+                } else {
+                    showActionBar()
+                }
+            }
+
+            override fun onTransitionCompleted(motionLayout: MotionLayout?, currentId: Int) {
+            }
+
+            override fun onTransitionTrigger(
+                motionLayout: MotionLayout?,
+                triggerId: Int,
+                positive: Boolean,
+                progress: Float
+            ) {
+            }
+
+        })
     }
 
     override fun pass(videoId: String) {
